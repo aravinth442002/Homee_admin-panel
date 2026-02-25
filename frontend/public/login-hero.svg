@@ -1,0 +1,34 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="400" fill="transparent"/>
+  <!-- Background Card -->
+  <rect x="40" y="70" width="320" height="260" rx="20" fill="#1A9C24" fill-opacity="0.08"/>
+  <rect x="60" y="90" width="280" height="220" rx="12" fill="white" stroke="#E5E7EB" stroke-width="2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
+  
+  <!-- Orange Header Bar -->
+  <rect x="85" y="115" width="100" height="16" rx="8" fill="#F5A623"/>
+  
+  <!-- Text Lines -->
+  <rect x="85" y="145" width="160" height="8" rx="4" fill="#F3F4F6"/>
+  <rect x="85" y="160" width="120" height="8" rx="4" fill="#F3F4F6"/>
+  
+  <!-- Dashboard Donut Chart -->
+  <circle cx="280" cy="145" r="35" stroke="#F3F4F6" stroke-width="14"/>
+  <path d="M 280 110 A 35 35 0 0 1 315 145" stroke="#F5A623" stroke-width="14" stroke-linecap="round" fill="none"/>
+  <path d="M 315 145 A 35 35 0 0 1 245 145" stroke="#1A9C24" stroke-width="14" stroke-linecap="round" fill="none"/>
+
+  <!-- Stats Grid -->
+  <rect x="85" y="190" width="105" height="90" rx="10" fill="#F9FAFB" stroke="#F3F4F6" stroke-width="2"/>
+  <rect x="210" y="190" width="105" height="90" rx="10" fill="#F9FAFB" stroke="#F3F4F6" stroke-width="2"/>
+  
+  <rect x="105" y="210" width="24" height="24" rx="6" fill="#1A9C24" fill-opacity="0.2"/>
+  <rect x="105" y="245" width="60" height="6" rx="3" fill="#D1D5DB"/>
+  <rect x="105" y="260" width="40" height="6" rx="3" fill="#E5E7EB"/>
+
+  <rect x="230" y="210" width="24" height="24" rx="6" fill="#F5A623" fill-opacity="0.2"/>
+  <rect x="230" y="245" width="60" height="6" rx="3" fill="#D1D5DB"/>
+  <rect x="230" y="260" width="40" height="6" rx="3" fill="#E5E7EB"/>
+
+  <!-- Floating Green Element -->
+  <circle cx="70" cy="310" r="16" fill="#1A9C24" fill-opacity="0.2"/>
+  <circle cx="330" cy="90" r="12" fill="#F5A623" fill-opacity="0.2"/>
+</svg>
