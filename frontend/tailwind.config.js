@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "class", // 🔥 REQUIRED
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,11 +8,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "rgb(var(--color-primary) / <alpha-value>)",
-        secondary: "rgb(var(--color-secondary) / <alpha-value>)",
-        tertiary: "rgb(var(--color-tertiary) / <alpha-value>)",
-        background: "rgb(var(--color-background) / <alpha-value>)",
-        text: "rgb(var(--color-text) / <alpha-value>)",
+        primary: "var(--color-primary)",
+        "primary-hover": "var(--color-primary-hover)",
+        "primary-light": "var(--color-primary-light)",
+        secondary: "var(--color-secondary)",
+        tertiary: "var(--color-tertiary)",
+        quaternary: "var(--color-quaternary)",
+        background: "var(--color-background)",
+        text: "var(--color-text)",
       },
     },
   },

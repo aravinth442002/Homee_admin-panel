@@ -24,26 +24,26 @@ const UserDetail = () => {
                     <FiArrowLeft size={24} />
                 </button>
                 <h1 className="text-[22px] font-bold text-gray-800 font-inter tracking-tight">
-                    User Details
+                    {activeTab}
                 </h1>
             </div>
 
             <div className="flex-1 bg-white rounded-2xl min-h-[70vh] shadow-[0_4px_24px_rgba(0,0,0,0.02)] mb-6 flex flex-col overflow-hidden border border-gray-100/50">
                 {/* Tabs Header */}
-                <div className="flex items-center bg-[#F0FDF4] px-8 pt-6 rounded-t-2xl border-b border-gray-200">
+                <div className="flex items-center bg-primary-light px-8 pt-6 rounded-t-2xl border-b border-gray-200">
                     <button
-                        className={`pb-4 font-bold text-[18px] mr-10 transition-colors relative ${activeTab === 'User Details' ? 'text-black' : 'text-black border-transparent hover:text-[#1A9C24]'}`}
+                        className={`pb-4 font-bold text-[18px] mr-10 transition-colors relative ${activeTab === 'User Details' ? 'text-black' : 'text-black border-transparent hover:text-primary'}`}
                         onClick={() => setActiveTab('User Details')}
                     >
                         User Details
-                        {activeTab === 'User Details' && <div className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#1A9C24] rounded-t-md z-10"></div>}
+                        {activeTab === 'User Details' && <div className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-primary rounded-t-md z-10"></div>}
                     </button>
                     <button
-                        className={`pb-4 font-bold text-[18px] transition-colors relative ${activeTab === 'Wallet Transactions' ? 'text-[#1A9C24]' : 'text-[#1A9C24] border-transparent hover:text-black'}`}
+                        className={`pb-4 font-bold text-[18px] transition-colors relative ${activeTab === 'Wallet Transactions' ? 'text-primary' : 'text-primary border-transparent hover:text-black'}`}
                         onClick={() => setActiveTab('Wallet Transactions')}
                     >
                         Wallet Transactions
-                        {activeTab === 'Wallet Transactions' && <div className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#1A9C24] rounded-t-md z-10"></div>}
+                        {activeTab === 'Wallet Transactions' && <div className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-primary rounded-t-md z-10"></div>}
                     </button>
                 </div>
 
@@ -77,7 +77,7 @@ const UserDetail = () => {
 
                             {/* Address 01 */}
                             <div className="mt-8">
-                                <div className="bg-[#F0FDF4] px-4 py-3 rounded-lg flex items-center mb-6">
+                                <div className="bg-primary-light px-4 py-3 rounded-lg flex items-center mb-6">
                                     <h3 className="text-[17px] font-bold text-black">Address-01</h3>
                                 </div>
                                 <div className="grid grid-cols-2 gap-x-12 gap-y-6">
@@ -110,7 +110,7 @@ const UserDetail = () => {
 
                             {/* Address 02 */}
                             <div className="mt-8">
-                                <div className="bg-[#F0FDF4] px-4 py-3 rounded-lg flex items-center mb-6">
+                                <div className="bg-primary-light px-4 py-3 rounded-lg flex items-center mb-6">
                                     <h3 className="text-[17px] font-bold text-black">Address-02</h3>
                                 </div>
                                 <div className="grid grid-cols-2 gap-x-12 gap-y-6">
@@ -149,7 +149,7 @@ const UserDetail = () => {
                             <div className="flex-1 overflow-auto w-full custom-scrollbar">
                                 <table className="w-full text-left min-w-[1000px]">
                                     <thead>
-                                        <tr className="bg-[#2E4A35] text-white text-[13px] font-medium tracking-wide">
+                                        <tr className="bg-tertiary text-white text-[13px] font-medium tracking-wide">
                                             <th className="py-4 pl-5 w-12 rounded-tl-xl"><input type="checkbox" className="accent-primary w-4 h-4 cursor-pointer align-middle" /></th>
                                             <th className="py-4 px-3 w-16">Sl.no</th>
                                             <th className="py-4 px-3">Date</th>
@@ -218,7 +218,7 @@ const UserDetail = () => {
                                 <div className="flex items-center space-x-1 font-medium bg-white p-1 rounded-lg border border-gray-100">
                                     <button className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all">«</button>
                                     <button className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all">‹</button>
-                                    <button className="px-3.5 py-1.5 bg-[#39B54A] text-white rounded-md shadow-sm transition-all">1</button>
+                                    <button className="px-3.5 py-1.5 bg-primary text-white rounded-md shadow-sm transition-all">1</button>
                                     <button className="px-3.5 py-1.5 text-gray-600 hover:bg-gray-50 rounded-md transition-all">2</button>
                                     <button className="px-3.5 py-1.5 text-gray-600 hover:bg-gray-50 rounded-md transition-all">3</button>
                                     <span className="px-2 py-1.5 text-gray-400">...</span>

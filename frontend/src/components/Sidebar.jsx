@@ -48,15 +48,17 @@ const Sidebar = () => {
             {/* Navigation Elements */}
             <div className="flex-1 overflow-y-auto overflow-x-hidden hide-scrollbar px-3 pb-2 space-y-2 mt-4">
                 {navItems.map((item, idx) => {
-                    // Check if current route matches item path exactly, or slightly fuzzy for sub-routes
-                    const isActive = location.pathname === item.path;
+                    // Check if current route matches item path exactly, or is a sub-route
+                    const isActive = item.path === '/dashboard'
+                        ? location.pathname === item.path
+                        : location.pathname.startsWith(item.path);
 
                     return (
                         <Link
                             key={idx}
                             to={item.path}
                             className={`w-full flex items-center px-4 py-2.5 rounded-lg group transition-all duration-200
-                                ${isActive ? 'bg-[#39B54A] text-white font-medium shadow-sm' : 'hover:bg-[#2A3F31] hover:text-white'}
+                                ${isActive ? 'bg-primary text-quaternary font-medium shadow-sm' : 'hover:bg-[#2A3F31] hover:text-white'}
                                 ${isCollapsed ? 'justify-center' : 'justify-between'}`}
                             title={isCollapsed ? item.name : ""}
                         >

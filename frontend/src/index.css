@@ -4,29 +4,29 @@
 
 @layer base {
     :root {
-        --color-primary: 26 156 36;
-        /* green from design */
-        --color-secondary: 245 166 35;
-        /* orange from design */
-        --color-tertiary: 33 57 36;
-        /* dark background green */
-        --color-background: 255 255 255;
-        /* white */
-        --color-text: 15 23 42;
-        /* slate-900 */
+        --color-primary: #3EC832;
+        --color-primary-hover: #2fae28;
+        --color-primary-light: #b7f0b2;
+
+        --color-secondary: #F5A623;
+        --color-tertiary: #284B30;
+        --color-quaternary: #FFFFFF;
+
+        --color-background: #FFFFFF;
+        --color-text: #0F172A;
     }
 
     .dark {
-        --color-primary: 96 165 250;
-        /* blue-400 */
-        --color-secondary: 192 132 252;
-        /* purple-400 */
-        --color-tertiary: 244 114 182;
-        /* pink-400 */
-        --color-background: 15 23 42;
-        /* slate-900 */
-        --color-text: 248 250 252;
-        /* slate-50 */
+        --color-primary: #3EC832;
+        --color-primary-hover: #34d399;
+        --color-primary-light: #86efac;
+
+        --color-secondary: #C084FC;
+        --color-tertiary: #b0f2aa;
+        --color-quaternary: #0F172A;
+
+        --color-background: #0F172A;
+        --color-text: #FFFFFF;
     }
 }
 
@@ -41,4 +41,42 @@
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
+}
+
+/* Global Scrollbar Refinement - Using Primary Green */
+html,
+body,
+* {
+    scrollbar-color: #3EC832 #f8f8f8 !important;
+    scrollbar-width: unset !important;
+}
+
+/* Webkit specific (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+    display: block !important;
+}
+
+::-webkit-scrollbar-track {
+    background: #f8f8f8 !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3EC832 !important;
+    border-radius: 10px !important;
+    border: 2px solid #f8f8f8 !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3EC832 !important;
+}
+
+/* Specific class for tables/containers if needed */
+.custom-scrollbar {
+    scrollbar-color: #3EC832 #f1f1f1;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #3EC832;
 }
