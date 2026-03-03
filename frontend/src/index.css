@@ -5,41 +5,29 @@
 @layer base {
     :root {
         --color-primary: #3EC832;
-        --color-primary-hover: #2fae28;
-        --color-primary-light: #b7f0b2;
+        --color-primary-hover: #61b35d;
+        --color-primary-light: #d8fcd5;
 
-        --color-secondary: #F5A623;
-        --color-tertiary: #284B30;
-        --color-quaternary: #FFFFFF;
+        --color-secondary: #284B30;
+        --color-tertiary: #FFFFFF;
+        --color-quaternary: #4D3414;
+        --color-quinary: #edf2f7;
 
         --color-background: #FFFFFF;
-        --color-text: #0F172A;
-    }
-
-    .dark {
-        --color-primary: #3EC832;
-        --color-primary-hover: #34d399;
-        --color-primary-light: #86efac;
-
-        --color-secondary: #C084FC;
-        --color-tertiary: #b0f2aa;
-        --color-quaternary: #0F172A;
-
-        --color-background: #0F172A;
-        --color-text: #FFFFFF;
+        --color-dark: #0F172A;
     }
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .hide-scrollbar::-webkit-scrollbar {
-    display: none;
+    display: none !important;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .hide-scrollbar {
-    -ms-overflow-style: none;
+    -ms-overflow-style: none !important;
     /* IE and Edge */
-    scrollbar-width: none;
+    scrollbar-width: none !important;
     /* Firefox */
 }
 
@@ -47,7 +35,7 @@
 html,
 body,
 * {
-    scrollbar-color: #3EC832 #f8f8f8 !important;
+    scrollbar-color: #284B30 #f8f8f8 !important;
     scrollbar-width: unset !important;
 }
 

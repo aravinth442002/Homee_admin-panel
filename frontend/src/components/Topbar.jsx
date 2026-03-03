@@ -7,7 +7,7 @@ const Topbar = () => {
     const isDashboard = location.pathname === '/dashboard';
 
     return (
-        <header className="h-24 bg-white border-b border-gray-100 flex items-center justify-between px-8 shrink-0">
+        <header className="h-24 bg-background border-b border-gray-100 flex items-center justify-between px-8 shrink-0">
             {/* Left Greeting */}
             <div className="flex flex-col">
                 <h1 className="text-xl font-bold text-gray-900 tracking-tight">
@@ -27,7 +27,7 @@ const Topbar = () => {
                     <input
                         type="text"
                         placeholder="Search"
-                        className="block w-72 pl-11 pr-4 py-2.5 outline-none bg-[#F3F4F6] border border-transparent rounded-xl text-sm focus:bg-white focus:border-gray-200 focus:ring-2 focus:ring-primary/10 transition-all text-gray-700 placeholder-gray-400 font-medium"
+                        className="block w-72 pl-11 pr-4 py-2.5 outline-none bg-[#F3F4F6] border border-transparent rounded-xl text-sm focus:bg-background focus:border-primary focus:ring-1 focus:ring-primary transition-all text-gray-700 placeholder-gray-400 font-medium"
                     />
                 </div>
             )}

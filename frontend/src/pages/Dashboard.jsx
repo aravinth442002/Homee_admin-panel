@@ -17,7 +17,7 @@ const Dashboard = () => {
             </div>
 
             {/* Massive Blank White Canvas as per user image */}
-            <div className="flex-1 bg-white rounded-2xl min-h-[70vh] shadow-[0_4px_24px_rgba(0,0,0,0.02)] mb-6">
+            <div className="flex-1 bg-background rounded-2xl min-h-[70vh] shadow-[0_4px_24px_rgba(0,0,0,0.02)] mb-6">
                 {/* Future dashboard charts/content go here */}
             </div>
         </div>

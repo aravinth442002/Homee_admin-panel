@@ -22,7 +22,7 @@ const Layout = () => {
                 {/* Bottom Footer Band */}
                 <div className="absolute bottom-0 w-full bg-[#18231C] py-1.5 flex justify-center items-center shrink-0 z-50">
                     <p className="text-[10px] text-white font-medium uppercase tracking-widest opacity-90 text-center">
-                        HOMEE PLATFORM © 2025
+                        HOMEE PLATFORM © 2026
                     </p>
                 </div>
             </div>

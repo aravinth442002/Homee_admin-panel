@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiArrowLeft, FiEdit2, FiEye, FiTrash2, FiMoreHorizontal } from 'react-icons/fi';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -7,6 +7,16 @@ const UserDetail = () => {
     const { id } = useParams();
     const [activeTab, setActiveTab] = useState('User Details');
     const [actionDropRow, setActionDropRow] = useState(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest('.action-dropdown-content') && !event.target.closest('.action-dropdown-button')) {
+                setActionDropRow(null);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     const transactions = Array.from({ length: 15 }).map((_, i) => ({
         slNo: (i + 1).toString().padStart(2, '0'),
@@ -23,23 +33,23 @@ const UserDetail = () => {
                 <button onClick={() => navigate(-1)} className="mr-3 text-gray-800 hover:text-primary transition-colors outline-none">
                     <FiArrowLeft size={24} />
                 </button>
-                <h1 className="text-[22px] font-bold text-gray-800 font-inter tracking-tight">
+                <h1 className="text-[22px] font-bold text-dar font-inter tracking-tight">
                     {activeTab}
                 </h1>
             </div>
 
-            <div className="flex-1 bg-white rounded-2xl min-h-[70vh] shadow-[0_4px_24px_rgba(0,0,0,0.02)] mb-6 flex flex-col overflow-hidden border border-gray-100/50">
+            <div className="flex-1 bg-background rounded-2xl min-h-[70vh] shadow-[0_4px_24px_rgba(0,0,0,0.02)] mb-6 flex flex-col overflow-hidden border border-gray-100/50">
                 {/* Tabs Header */}
                 <div className="flex items-center bg-primary-light px-8 pt-6 rounded-t-2xl border-b border-gray-200">
                     <button
-                        className={`pb-4 font-bold text-[18px] mr-10 transition-colors relative ${activeTab === 'User Details' ? 'text-black' : 'text-black border-transparent hover:text-primary'}`}
+                        className={`pb-4 font-bold text-[18px] mr-10 transition-colors relative ${activeTab === 'User Details' ? 'text-primary' : 'text-secondary hover:text-primary/80'}`}
                         onClick={() => setActiveTab('User Details')}
                     >
                         User Details
                         {activeTab === 'User Details' && <div className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-primary rounded-t-md z-10"></div>}
                     </button>
                     <button
-                        className={`pb-4 font-bold text-[18px] transition-colors relative ${activeTab === 'Wallet Transactions' ? 'text-primary' : 'text-primary border-transparent hover:text-black'}`}
+                        className={`pb-4 font-bold text-[18px] transition-colors relative ${activeTab === 'Wallet Transactions' ? 'text-primary' : 'text-secondary hover:text-primary/80'}`}
                         onClick={() => setActiveTab('Wallet Transactions')}
                     >
                         Wallet Transactions
@@ -78,7 +88,7 @@ const UserDetail = () => {
                             {/* Address 01 */}
                             <div className="mt-8">
                                 <div className="bg-primary-light px-4 py-3 rounded-lg flex items-center mb-6">
-                                    <h3 className="text-[17px] font-bold text-black">Address-01</h3>
+                                    <h3 className="text-[17px] font-bold text-secondary">Address-01</h3>
                                 </div>
                                 <div className="grid grid-cols-2 gap-x-12 gap-y-6">
                                     <div className="border-b border-gray-200 pb-2">
@@ -111,9 +121,9 @@ const UserDetail = () => {
                             {/* Address 02 */}
                             <div className="mt-8">
                                 <div className="bg-primary-light px-4 py-3 rounded-lg flex items-center mb-6">
-                                    <h3 className="text-[17px] font-bold text-black">Address-02</h3>
+                                    <h3 className="text-[17px] font-bold text-secondary">Address-02</h3>
                                 </div>
-                                <div className="grid grid-cols-2 gap-x-12 gap-y-6">
+                                <div className="grid grid-cols-2 gap-x-10 gap-y-6">
                                     <div className="border-b border-gray-200 pb-2">
                                         <h4 className="text-[16px] font-bold text-gray-900 mb-1.5">Door/ Flat No</h4>
                                         <p className="text-[15px] font-medium text-gray-800">01</p>
@@ -146,10 +156,10 @@ const UserDetail = () => {
                     {activeTab === 'Wallet Transactions' && (
                         <div className="flex-1 flex flex-col w-full h-full bg-white relative">
                             {/* Table area with vertical and horizontal scrolling */}
-                            <div className="flex-1 overflow-auto w-full custom-scrollbar">
-                                <table className="w-full text-left min-w-[1000px]">
+                            <div className="flex-1 overflow-auto w-full custom-scrollbar mt-2">
+                                <table className="w-full text-center min-w-[1000px]">
                                     <thead>
-                                        <tr className="bg-tertiary text-white text-[13px] font-medium tracking-wide">
+                                        <tr className="bg-secondary text-background text-[14px] font-medium tracking-wide">
                                             <th className="py-4 pl-5 w-12 rounded-tl-xl"><input type="checkbox" className="accent-primary w-4 h-4 cursor-pointer align-middle" /></th>
                                             <th className="py-4 px-3 w-16">Sl.no</th>
                                             <th className="py-4 px-3">Date</th>
@@ -164,22 +174,22 @@ const UserDetail = () => {
                                         {transactions.map((tx, i) => (
                                             <tr key={i} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
                                                 <td className="py-5 pl-5"><input type="checkbox" className="accent-primary w-4 h-4 cursor-pointer rounded border-gray-300" /></td>
-                                                <td className="py-5 px-3 opacity-80">{tx.slNo}</td>
-                                                <td className="py-5 px-3 opacity-80">{tx.date}</td>
-                                                <td className="py-5 px-3 opacity-90">{tx.type}</td>
-                                                <td className="py-5 px-3 opacity-80">{tx.orderId}</td>
-                                                <td className="py-5 px-3 opacity-80">{tx.amount}</td>
-                                                <td className="py-5 px-3 opacity-80">{tx.status}</td>
-                                                <td className="py-5 px-3 text-center relative">
+                                                <td className="py-3 px-2 opacity-80">{tx.slNo}</td>
+                                                <td className="py-3 px-2 opacity-80">{tx.date}</td>
+                                                <td className="py-3 px-2 opacity-90">{tx.type}</td>
+                                                <td className="py-3 px-2 opacity-80">{tx.orderId}</td>
+                                                <td className="py-3 px-2 opacity-80">{tx.amount}</td>
+                                                <td className="py-3 px-2 opacity-80">{tx.status}</td>
+                                                <td className="py-3 px-2 text-center relative">
                                                     <button
                                                         onClick={() => setActionDropRow(actionDropRow === i ? null : i)}
-                                                        className="text-gray-400 hover:text-gray-600 transition-colors p-2"
+                                                        className="text-gray-400 hover:text-gray-600 transition-colors p-2 action-dropdown-button"
                                                     >
                                                         <FiMoreHorizontal size={18} />
                                                     </button>
 
                                                     {actionDropRow === i && (
-                                                        <div className="absolute right-8 top-10 w-32 bg-white border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] rounded-xl py-2 z-50 text-[13px]">
+                                                        <div className="absolute right-8 top-10 w-32 bg-white border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] rounded-xl py-2 z-50 text-[13px] action-dropdown-content">
                                                             <button className="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center space-x-3 text-gray-700 font-medium transition-colors">
                                                                 <FiEdit2 size={14} /> <span>Edit</span>
                                                             </button>

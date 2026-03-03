@@ -1,24 +1,35 @@
 import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import {
-    FiGrid, FiUser, FiMap, FiCoffee, FiPrinter, FiCheckSquare,
+    FiGrid, FiMap, FiCoffee, FiPrinter, FiCheckSquare,
     FiSettings, FiChevronsLeft, FiChevronsRight, FiChevronDown
 } from 'react-icons/fi';
+import { HiMiniUserGroup } from 'react-icons/hi2';
+import { PiCubeFocusBold } from 'react-icons/pi';
+import { TbTruckDelivery } from "react-icons/tb";
 import { MdAddShoppingCart } from 'react-icons/md';
+import { LuCookingPot } from 'react-icons/lu';
+import { BiBookBookmark } from 'react-icons/bi';
 
 const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: FiGrid },
-    { name: 'User', path: '/dashboard/user', icon: FiUser },
+    { name: 'User', path: '/dashboard/user', icon: HiMiniUserGroup },
     { name: 'Map View', path: '/dashboard/map', icon: FiMap },
-    { name: 'Vendor', path: '/dashboard/vendor', icon: FiCoffee, hasSub: true },
-    { name: 'Driver', path: '/dashboard/driver', icon: MdAddShoppingCart, hasSub: true },
-    { name: 'Shipping &Kilo...', path: '/dashboard/shipping', icon: FiPrinter, hasSub: true },
+    {
+        name: 'Vendor', path: '/dashboard/vendor', icon: PiCubeFocusBold, hasSub: true, subItems: [
+            { name: 'Vendor Request', path: '/dashboard/vendor/request', icon: LuCookingPot },
+            { name: 'Vendor List', path: '/dashboard/vendor/list', icon: BiBookBookmark }
+        ]
+    },
+    { name: 'Delivery', path: '/dashboard/delivery', icon: TbTruckDelivery, hasSub: true },
+    { name: 'Shipping & Kilo...', path: '/dashboard/shipping', icon: FiPrinter, hasSub: true },
     { name: 'Admin', path: '/dashboard/admin', icon: FiCheckSquare, hasSub: true },
     { name: 'Profile Settings', path: '/dashboard/settings', icon: FiSettings },
 ];
 
 const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
+    const [expandedMenus, setExpandedMenus] = useState({});
     const location = useLocation();
 
     return (
@@ -26,7 +37,7 @@ const Sidebar = () => {
             {/* Logo Section */}
             <div className={`h-32 flex items-center justify-center shrink-0 w-full pt-4 pb-2 transition-all duration-300 ${isCollapsed ? '' : 'space-x-4'}`}>
                 {!isCollapsed && (
-                    <div className="bg-white p-3 rounded-2xl w-36 h-24 flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.15)] overflow-hidden border border-gray-100 shrink-0">
+                    <div className="bg-background p-3 rounded-2xl w-36 h-24 flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.15)] overflow-hidden border border-gray-100 shrink-0">
                         <img
                             src="/logo.png"
                             alt="Homee Logo"
@@ -53,23 +64,60 @@ const Sidebar = () => {
                         ? location.pathname === item.path
                         : location.pathname.startsWith(item.path);
 
+                    const isExpanded = expandedMenus[item.name] !== undefined
+                        ? expandedMenus[item.name]
+                        : isActive;
+
+                    const handleMenuClick = (e) => {
+                        if (item.subItems) {
+                            if (item.path === '#') {
+                                e.preventDefault();
+                            }
+                            setExpandedMenus(prev => ({ ...prev, [item.name]: !isExpanded }));
+                        }
+                    };
+
                     return (
-                        <Link
-                            key={idx}
-                            to={item.path}
-                            className={`w-full flex items-center px-4 py-2.5 rounded-lg group transition-all duration-200
-                                ${isActive ? 'bg-primary text-quaternary font-medium shadow-sm' : 'hover:bg-[#2A3F31] hover:text-white'}
-                                ${isCollapsed ? 'justify-center' : 'justify-between'}`}
-                            title={isCollapsed ? item.name : ""}
-                        >
-                            <div className={`flex items-center ${isCollapsed ? 'justify-center space-x-0' : 'space-x-4'}`}>
-                                <item.icon size={20} className={isActive ? 'text-white' : 'text-[#8EA295] group-hover:text-white'} />
-                                {!isCollapsed && <span className="text-sm truncate w-36 text-left transition-all duration-200">{item.name}</span>}
-                            </div>
-                            {!isCollapsed && item.hasSub && (
-                                <FiChevronDown size={16} className={isActive ? 'text-white' : 'text-[#63756A] group-hover:text-[#8EA295]'} />
+                        <div key={idx} className="flex flex-col">
+                            <Link
+                                to={item.path}
+                                onClick={handleMenuClick}
+                                className={`w-full flex items-center px-4 py-2.5 rounded-lg group transition-all duration-200
+                                    ${isActive ? 'bg-primary text-tertiary font-medium shadow-sm' : 'hover:bg-secondary hover:text-primary-hover'}
+                                    ${isCollapsed ? 'justify-center' : 'justify-between'}`}
+                                title={isCollapsed ? item.name : ""}
+                            >
+                                <div className={`flex items-center ${isCollapsed ? 'justify-center space-x-0' : 'space-x-4'}`}>
+                                    <item.icon size={20} className={isActive ? 'text-white' : 'text-[#8EA295] group-hover:text-tertiary'} />
+                                    {!isCollapsed && <span className="text-sm truncate w-36 text-left transition-all duration-200">{item.name}</span>}
+                                </div>
+                                {!isCollapsed && item.hasSub && (
+                                    <FiChevronDown size={16} className={`transition-transform duration-200 ${isActive ? 'text-white' : 'text-[#63756A] group-hover:text-[#8EA295]'} ${isExpanded ? 'rotate-180' : ''}`} />
+                                )}
+                            </Link>
+
+                            {/* Submenu Items */}
+                            {!isCollapsed && item.subItems && isExpanded && (
+                                <div className="flex flex-col mt-1 space-y-2 bg-[#1A251D] rounded-lg py-2 px-1">
+                                    {item.subItems.map((sub, i) => {
+                                        const isSubActive = location.pathname === sub.path || location.pathname.startsWith(sub.path);
+                                        return (
+                                            <Link
+                                                key={i}
+                                                to={sub.path}
+                                                className={`flex items-center px-4 py-2 text-sm transition-all duration-200 rounded-md
+                                                    ${isSubActive ? 'text-primary font-medium' : 'text-white hover:text-primary'}`}
+                                            >
+                                                <div className="w-8 flex justify-center mr-3">
+                                                    <sub.icon size={20} className={isSubActive ? 'text-white' : 'text-white'} />
+                                                </div>
+                                                <span>{sub.name}</span>
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
                             )}
-                        </Link>
+                        </div>
                     );
                 })}
             </div>

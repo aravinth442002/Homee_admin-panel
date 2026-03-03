@@ -27,10 +27,10 @@ const Login = () => {
             <div className="absolute top-[-20%] right-[-10%] w-[50vw] h-[50vw] bg-[#2d4a31] rounded-full mix-blend-multiply opacity-50 blur-3xl pointer-events-none"></div>
             <div className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-[#1a3020] rounded-full mix-blend-multiply opacity-50 blur-3xl pointer-events-none"></div>
 
-            <div className="bg-white rounded-xl shadow-2xl w-full max-w-5xl flex flex-col md:flex-row overflow-hidden relative z-10 min-h-[600px]">
+            <div className="bg-background rounded-xl shadow-2xl w-full max-w-5xl flex flex-col md:flex-row overflow-hidden relative z-10 min-h-[600px]">
 
                 {/* Left Side - Illustration container */}
-                <div className="w-full md:w-1/2 bg-white relative p-8 flex items-center justify-center overflow-hidden">
+                <div className="w-full md:w-1/2 bg-background relative p-8 flex items-center justify-center overflow-hidden">
                     {/* Background grid pattern from the design */}
                     <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px)", backgroundSize: "20px 20px" }}></div>
 
@@ -43,7 +43,7 @@ const Login = () => {
                 </div>
 
                 {/* Right Side - Form */}
-                <div className="w-full md:w-1/2 p-8 md:p-14 flex items-center justify-center bg-white relative">
+                <div className="w-full md:w-1/2 p-8 md:p-14 flex items-center justify-center bg-background relative">
                     {/* Orange grid pattern overlay (subtle in bottom right of form side like the image) */}
                     <div className="absolute bottom-0 right-0 w-32 h-32 opacity-20" style={{ backgroundImage: "linear-gradient(#f5a623 2px, transparent 2px), linear-gradient(90deg, #f5a623 2px, transparent 2px)", backgroundSize: "16px 16px" }}></div>
 
@@ -63,7 +63,7 @@ const Login = () => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Enter your email"
-                                    className="w-full px-4 py-3 rounded-lg bg-[#f4f7fb] border border-transparent focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium text-gray-700"
+                                    className="w-full px-4 py-3 rounded-lg bg-[#f4f7fb] border border-transparent focus:border-primary focus:bg-background focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium text-gray-700"
                                     required
                                 />
                             </div>
@@ -79,7 +79,7 @@ const Login = () => {
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         placeholder="Enter your password"
-                                        className="w-full px-4 py-3 rounded-lg bg-[#f4f7fb] border border-transparent focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium text-gray-700 pr-12"
+                                        className="w-full px-4 py-3 rounded-lg bg-[#f4f7fb] border border-transparent focus:border-primary focus:bg-background focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium text-gray-700 pr-12"
                                         required
                                     />
                                     <button

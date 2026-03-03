@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FiArrowLeft, FiSearch, FiCalendar, FiFilter, FiDownload, FiEdit2, FiEye, FiTrash2, FiMoreHorizontal } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -6,6 +6,26 @@ const UserList = () => {
     const navigate = useNavigate();
     const [actionDropRow, setActionDropRow] = useState(null);
     const [filterDropOpen, setFilterDropOpen] = useState(false);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest('.action-dropdown-content') && !event.target.closest('.action-dropdown-button')) {
+                setActionDropRow(null);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest('.action-dropdown-content') && !event.target.closest('.action-dropdown-button')) {
+                setActionDropRow(null);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [userToDelete, setUserToDelete] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
@@ -140,7 +160,7 @@ const UserList = () => {
     };
 
     return (
-        <div className="w-full flex-1 flex flex-col">
+        <div className="w-full flex-1 flex flex-col p-2">
             {/* Header */}
             <div className="flex items-center mb-6">
                 <Link to="/dashboard" className="mr-3 text-gray-800 hover:text-primary transition-colors">
@@ -202,7 +222,7 @@ const UserList = () => {
                         </div>
 
                         {/* From Date */}
-                        <div className={`relative border rounded-lg flex items-center px-3 py-2 transition-all duration-200 ${focusedInput === 'from' ? 'border-primary ring-1 ring-primary/20' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`relative border rounded-lg flex items-center px-3 py-2 transition-all duration-200 ${focusedInput === 'from' ? 'border-primary ring-1 ring-primary' : 'border-gray-200 hover:border-gray-300'}`}>
                             <FiCalendar
                                 className={`mr-2 transition-colors duration-200 cursor-pointer hover:scale-110 active:scale-95 ${focusedInput === 'from' || fromDate ? 'text-primary' : 'text-gray-400'}`}
                                 onClick={() => fromPickerRef.current?.showPicker()}
@@ -228,7 +248,7 @@ const UserList = () => {
                         </div>
 
                         {/* To Date */}
-                        <div className={`relative border rounded-lg flex items-center px-3 py-2 transition-all duration-200 ${focusedInput === 'to' ? 'border-primary ring-1 ring-primary/20' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <div className={`relative border rounded-lg flex items-center px-3 py-2 transition-all duration-200 ${focusedInput === 'to' ? 'border-primary ring-1 ring-primary' : 'border-gray-200 hover:border-gray-300'}`}>
                             <FiCalendar
                                 className={`mr-2 transition-colors duration-200 cursor-pointer hover:scale-110 active:scale-95 ${focusedInput === 'to' || toDate ? 'text-primary' : 'text-gray-400'}`}
                                 onClick={() => toPickerRef.current?.showPicker()}
@@ -291,7 +311,7 @@ const UserList = () => {
                 <div className="flex-1 overflow-x-auto w-full custom-scrollbar">
                     <table className="w-full text-left min-w-[1200px]">
                         <thead>
-                            <tr className="bg-tertiary text-white text-[13px] font-medium tracking-wide">
+                            <tr className="bg-secondary text-background text-[13px] font-medium tracking-wide">
                                 <th className="py-4 pl-5 w-12 rounded-tl-xl">
                                     <input
                                         type="checkbox"
@@ -346,14 +366,14 @@ const UserList = () => {
                                         <td className="py-4 px-3 text-center relative">
                                             <button
                                                 onClick={() => setActionDropRow(actionDropRow === i ? null : i)}
-                                                className="text-gray-400 hover:text-gray-600 transition-colors p-2"
+                                                className="text-gray-400 hover:text-gray-600 transition-colors p-2 action-dropdown-button"
                                             >
                                                 <FiMoreHorizontal size={18} />
                                             </button>
 
                                             {/* Action Dropdown per row */}
                                             {actionDropRow === i && (
-                                                <div className="absolute right-8 top-10 w-32 bg-white border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] rounded-xl py-2 z-50 text-[13px]">
+                                                <div className="absolute right-8 top-10 w-32 bg-white border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] rounded-xl py-2 z-50 text-[13px] action-dropdown-content">
                                                     <button className="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center space-x-3 text-gray-700 font-medium transition-colors">
                                                         <FiEdit2 size={14} /> <span>Edit</span>
                                                     </button>
