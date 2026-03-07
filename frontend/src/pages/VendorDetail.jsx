@@ -7,6 +7,8 @@ const VendorDetail = () => {
     const { id } = useParams();
     const [activeTab, setActiveTab] = useState('Vendor Details');
     const [actionDropRow, setActionDropRow] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -18,14 +20,23 @@ const VendorDetail = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const transactions = Array.from({ length: 5 }).map((_, i) => ({
+    const transactions = Array.from({ length: 25 }).map((_, i) => ({
         slNo: (i + 1).toString().padStart(2, '0'),
-        subscriptionName: 'Free Plan',
-        amount: 'Free',
+        subscriptionName: i % 3 === 0 ? 'Monthly Plan' : i % 3 === 1 ? 'Yearly Plan' : 'Free Plan',
+        amount: i % 3 === 0 ? '₹999' : i % 3 === 1 ? '₹9999' : 'Free',
         startDate: '2025-12-11  12:45:03',
         endDate: '2026-12-11  12:45:03',
         status: i % 2 === 0 ? 'Active' : 'Deactive',
     }));
+
+    const totalPages = Math.ceil(transactions.length / itemsPerPage) || 1;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedTransactions = transactions.slice(startIndex, startIndex + itemsPerPage);
+
+    // Reset pagination on tab change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [activeTab]);
 
     return (
         <div className="w-full flex-1 flex flex-col">
@@ -213,8 +224,8 @@ const VendorDetail = () => {
                                             <th className="py-4 px-3 w-20 text-center rounded-tr-xl">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="text-[13px] text-gray-600 font-medium">
-                                        {transactions.map((tx, i) => (
+                                    <tbody className="text-[13px] text-gray-700 font-medium">
+                                        {paginatedTransactions.map((tx, i) => (
                                             <tr key={i} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
                                                 <td className="py-5 pl-5"><input type="checkbox" className="accent-primary w-4 h-4 cursor-pointer rounded border-gray-300" /></td>
                                                 <td className="py-3 px-2 opacity-80">{tx.slNo}</td>
@@ -258,30 +269,68 @@ const VendorDetail = () => {
                             {/* Pagination */}
                             <div className="p-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600 shrink-0 bg-white">
                                 <div className="flex items-center space-x-3">
-                                    <span className="font-medium">Page</span>
+                                    <span className="font-medium text-gray-500">Page</span>
                                     <div className="relative">
-                                        <select className="appearance-none border border-gray-200 rounded-lg px-4 py-1.5 pr-8 outline-none focus:border-primary cursor-pointer font-medium bg-white">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
+                                        <select
+                                            value={currentPage}
+                                            onChange={(e) => setCurrentPage(Number(e.target.value))}
+                                            className="appearance-none border border-gray-200 rounded-lg px-4 py-1.5 pr-8 outline-none focus:border-primary cursor-pointer font-bold text-gray-700 bg-white shadow-sm"
+                                        >
+                                            {Array.from({ length: totalPages }).map((_, i) => (
+                                                <option key={i} value={i + 1}>{i + 1}</option>
+                                            ))}
                                         </select>
                                         <svg className="w-4 h-4 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                         </svg>
                                     </div>
-                                    <span className="font-medium">of 10</span>
+                                    <span className="font-medium text-gray-500">of {totalPages}</span>
                                 </div>
 
-                                <div className="flex items-center space-x-1 font-medium bg-white p-1 rounded-lg border border-gray-100">
-                                    <button className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all">«</button>
-                                    <button className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all">‹</button>
-                                    <button className="px-3.5 py-1.5 bg-primary text-white rounded-md shadow-sm transition-all">1</button>
-                                    <button className="px-3.5 py-1.5 text-gray-600 hover:bg-gray-50 rounded-md transition-all">2</button>
-                                    <button className="px-3.5 py-1.5 text-gray-600 hover:bg-gray-50 rounded-md transition-all">3</button>
-                                    <span className="px-2 py-1.5 text-gray-400">...</span>
-                                    <button className="px-3.5 py-1.5 text-gray-600 hover:bg-gray-50 rounded-md transition-all">10</button>
-                                    <button className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all">›</button>
-                                    <button className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all">»</button>
+                                <div className="flex items-center space-x-1 font-medium bg-white p-1 rounded-lg border border-gray-100 shadow-sm">
+                                    <button
+                                        onClick={() => setCurrentPage(1)}
+                                        disabled={currentPage === 1}
+                                        className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all disabled:opacity-20 disabled:cursor-not-allowed font-bold"
+                                    >«</button>
+                                    <button
+                                        onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                                        disabled={currentPage === 1}
+                                        className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all disabled:opacity-20 disabled:cursor-not-allowed font-bold"
+                                    >‹</button>
+
+                                    {Array.from({ length: totalPages }).map((_, i) => {
+                                        if (
+                                            i === 0 ||
+                                            i === totalPages - 1 ||
+                                            (i >= currentPage - 2 && i <= currentPage)
+                                        ) {
+                                            return (
+                                                <button
+                                                    key={i}
+                                                    onClick={() => setCurrentPage(i + 1)}
+                                                    className={`px-3.5 py-1.5 rounded-md transition-all duration-200 font-bold ${currentPage === i + 1 ? 'bg-primary text-white shadow-md' : 'text-gray-600 hover:bg-gray-50'}`}
+                                                >
+                                                    {i + 1}
+                                                </button>
+                                            );
+                                        }
+                                        if (i === 1 || i === totalPages - 2) {
+                                            return <span key={i} className="px-2 text-gray-300">...</span>;
+                                        }
+                                        return null;
+                                    })}
+
+                                    <button
+                                        onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                                        disabled={currentPage === totalPages}
+                                        className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all disabled:opacity-20 disabled:cursor-not-allowed font-bold"
+                                    >›</button>
+                                    <button
+                                        onClick={() => setCurrentPage(totalPages)}
+                                        disabled={currentPage === totalPages}
+                                        className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all disabled:opacity-20 disabled:cursor-not-allowed font-bold"
+                                    >»</button>
                                 </div>
                             </div>
                         </div>

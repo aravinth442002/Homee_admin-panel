@@ -7,7 +7,6 @@ import {
 import { HiMiniUserGroup } from 'react-icons/hi2';
 import { PiCubeFocusBold } from 'react-icons/pi';
 import { TbTruckDelivery } from "react-icons/tb";
-import { MdAddShoppingCart } from 'react-icons/md';
 import { LuCookingPot } from 'react-icons/lu';
 import { BiBookBookmark } from 'react-icons/bi';
 
@@ -100,7 +99,8 @@ const Sidebar = () => {
                             {!isCollapsed && item.subItems && isExpanded && (
                                 <div className="flex flex-col mt-1 space-y-2 bg-[#1A251D] rounded-lg py-2 px-1">
                                     {item.subItems.map((sub, i) => {
-                                        const isSubActive = location.pathname === sub.path || location.pathname.startsWith(sub.path);
+                                        const isVendorDetail = location.pathname.startsWith('/dashboard/vendor/') && !['/dashboard/vendor/request', '/dashboard/vendor/list', '/dashboard/vendor/add'].includes(location.pathname);
+                                        const isSubActive = location.pathname === sub.path || location.pathname.startsWith(sub.path + '/') || (sub.name === 'Vendor List' && (location.pathname.includes('/vendor/add') || isVendorDetail));
                                         return (
                                             <Link
                                                 key={i}

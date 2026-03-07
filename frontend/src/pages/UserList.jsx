@@ -6,21 +6,16 @@ const UserList = () => {
     const navigate = useNavigate();
     const [actionDropRow, setActionDropRow] = useState(null);
     const [filterDropOpen, setFilterDropOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (!event.target.closest('.action-dropdown-content') && !event.target.closest('.action-dropdown-button')) {
                 setActionDropRow(null);
             }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (!event.target.closest('.action-dropdown-content') && !event.target.closest('.action-dropdown-button')) {
-                setActionDropRow(null);
+            if (!event.target.closest('.filter-dropdown-content') && !event.target.closest('.filter-dropdown-button')) {
+                setFilterDropOpen(false);
             }
         };
         document.addEventListener('mousedown', handleClickOutside);
@@ -36,10 +31,10 @@ const UserList = () => {
     const fromPickerRef = useRef(null);
     const toPickerRef = useRef(null);
 
-    const [users, setUsers] = useState(Array.from({ length: 13 }).map((_, i) => ({
-        id: `HFU0000000${i + 1}`,
+    const [users, setUsers] = useState(Array.from({ length: 25 }).map((_, i) => ({
+        id: `HFU0000000${(i + 1).toString().padStart(2, '0')}`,
         slNo: (i + 1).toString().padStart(2, '0'),
-        name: 'Ranjith',
+        name: i % 3 === 0 ? 'Ranjith' : i % 3 === 1 ? 'Aravindh' : 'Suresh',
         city: 'Chennai',
         state: 'Tamil Nadu',
         pincode: '600001',
@@ -135,6 +130,15 @@ const UserList = () => {
 
         return matchesSearch && matchesDate;
     });
+
+    const totalPages = Math.ceil(filteredUsers.length / itemsPerPage) || 1;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedUsers = filteredUsers.slice(startIndex, startIndex + itemsPerPage);
+
+    // Reset page when filter changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchQuery, fromDate, toDate]);
 
     const toggleSelectAll = () => {
         if (selectedIds.size === filteredUsers.length && filteredUsers.length > 0) {
@@ -277,7 +281,7 @@ const UserList = () => {
                     <div className="flex items-center space-x-3 relative">
                         {/* Filter Button */}
                         <button
-                            className="flex items-center space-x-2 text-primary border border-primary px-4 py-2 rounded-lg font-medium text-sm hover:bg-primary/5 transition-colors"
+                            className="flex items-center space-x-2 text-primary border border-primary px-4 py-2 rounded-lg font-medium text-sm hover:bg-primary/5 transition-colors filter-dropdown-button"
                             onClick={() => setFilterDropOpen(!filterDropOpen)}
                         >
                             <FiFilter />
@@ -286,7 +290,7 @@ const UserList = () => {
 
                         {/* Filter Dropdown */}
                         {filterDropOpen && (
-                            <div className="absolute top-12 left-0 w-36 bg-white border border-gray-100 shadow-xl rounded-lg py-2 z-50 text-sm">
+                            <div className="absolute top-12 left-0 w-36 bg-white border border-gray-100 shadow-xl rounded-lg py-2 z-50 text-sm filter-dropdown-content">
                                 <button className="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center space-x-2">
                                     <span className="font-semibold tracking-widest text-[10px] text-gray-500 uppercase">City</span>
                                 </button>
@@ -309,7 +313,7 @@ const UserList = () => {
 
                 {/* Table wrapper for scrolling */}
                 <div className="flex-1 overflow-x-auto w-full custom-scrollbar">
-                    <table className="w-full text-left min-w-[1200px]">
+                    <table className="w-full text-left min-w-[1200px] mt-2">
                         <thead>
                             <tr className="bg-secondary text-background text-[13px] font-medium tracking-wide">
                                 <th className="py-4 pl-5 w-12 rounded-tl-xl">
@@ -333,8 +337,8 @@ const UserList = () => {
                             </tr>
                         </thead>
                         <tbody className="text-[13px] text-gray-600 font-medium">
-                            {filteredUsers.length > 0 ? (
-                                filteredUsers.map((user, i) => (
+                            {paginatedUsers.length > 0 ? (
+                                paginatedUsers.map((user, i) => (
                                     <tr key={i} className={`border-b border-gray-100 hover:bg-gray-50/50 transition-colors ${selectedIds.has(user.id) ? 'bg-primary/5' : ''}`}>
                                         <td className="py-5 pl-5">
                                             <input
@@ -346,7 +350,7 @@ const UserList = () => {
                                         </td>
                                         <td className="py-4 px-3 opacity-80">{user.slNo}</td>
                                         <td className="py-4 px-3 opacity-80">{user.id}</td>
-                                        <td className="py-4 px-3 opacity-90">{user.name}</td>
+                                        <td className="py-4 px-3 opacity-90 font-bold text-gray-800">{user.name}</td>
                                         <td className="py-4 px-3 opacity-80">{user.city}</td>
                                         <td className="py-4 px-3 opacity-80">{user.state}</td>
                                         <td className="py-4 px-3 opacity-80">{user.pincode}</td>
@@ -354,11 +358,11 @@ const UserList = () => {
                                         <td className="py-4 px-3 opacity-80">{user.registered}</td>
                                         <td className="py-4 px-3 text-center">
                                             {user.status === 'Preparing' ? (
-                                                <span className="inline-block px-4 py-1.5 rounded-md bg-[#FFF0E6] text-[#FF7A45] font-semibold text-[11px] min-w-[90px]">
+                                                <span className="inline-block px-4 py-1.5 rounded-md bg-[#FFF0E6] text-[#FF7A45] font-bold text-[11px] min-w-[90px]">
                                                     {user.status}
                                                 </span>
                                             ) : (
-                                                <span className="inline-block px-4 py-1.5 rounded-md bg-[#E6F7FF] text-[#40A9FF] font-semibold text-[11px] min-w-[90px]">
+                                                <span className="inline-block px-4 py-1.5 rounded-md bg-[#E6F7FF] text-[#40A9FF] font-bold text-[11px] min-w-[90px]">
                                                     {user.status}
                                                 </span>
                                             )}
@@ -401,12 +405,8 @@ const UserList = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="11" className="py-12 text-center">
-                                        <div className="flex flex-col items-center justify-center text-gray-400">
-                                            <FiSearch size={40} className="mb-4 opacity-50 text-primary" />
-                                            <p className="text-base font-medium">No data available</p>
-                                            <p className="text-sm opacity-60">Try adjusting your search query or date range</p>
-                                        </div>
+                                    <td colSpan="11" className="py-12 text-center text-gray-500">
+                                        No users found.
                                     </td>
                                 </tr>
                             )}
@@ -417,30 +417,69 @@ const UserList = () => {
                 {/* Pagination */}
                 <div className="p-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600 shrink-0">
                     <div className="flex items-center space-x-3">
-                        <span className="font-medium">Page</span>
+                        <span className="font-medium text-gray-500">Page</span>
                         <div className="relative">
-                            <select className="appearance-none border border-gray-200 rounded-lg px-4 py-1.5 pr-8 outline-none focus:border-primary cursor-pointer font-medium bg-white">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
+                            <select
+                                value={currentPage}
+                                onChange={(e) => setCurrentPage(Number(e.target.value))}
+                                className="appearance-none border border-gray-200 rounded-lg px-4 py-1.5 pr-8 outline-none focus:border-primary cursor-pointer font-bold text-gray-700 bg-white shadow-sm"
+                            >
+                                {Array.from({ length: totalPages }).map((_, i) => (
+                                    <option key={i} value={i + 1}>{i + 1}</option>
+                                ))}
                             </select>
                             <svg className="w-4 h-4 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                             </svg>
                         </div>
-                        <span className="font-medium">of 10</span>
+                        <span className="font-medium text-gray-500">of {totalPages}</span>
                     </div>
 
-                    <div className="flex items-center space-x-1 font-medium bg-white p-1 rounded-lg border border-gray-100">
-                        <button className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all">«</button>
-                        <button className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all">‹</button>
-                        <button className="px-3.5 py-1.5 bg-primary text-white rounded-md shadow-sm transition-all">1</button>
-                        <button className="px-3.5 py-1.5 text-gray-600 hover:bg-gray-50 rounded-md transition-all">2</button>
-                        <button className="px-3.5 py-1.5 text-gray-600 hover:bg-gray-50 rounded-md transition-all">3</button>
-                        <span className="px-2 py-1.5 text-gray-400">...</span>
-                        <button className="px-3.5 py-1.5 text-gray-600 hover:bg-gray-50 rounded-md transition-all">10</button>
-                        <button className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all">›</button>
-                        <button className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all">»</button>
+                    <div className="flex items-center space-x-1 font-medium bg-white p-1 rounded-lg border border-gray-100 shadow-sm">
+                        <button
+                            onClick={() => setCurrentPage(1)}
+                            disabled={currentPage === 1}
+                            className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+                        >«</button>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                            disabled={currentPage === 1}
+                            className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+                        >‹</button>
+
+                        {Array.from({ length: totalPages }).map((_, i) => {
+                            // Show first, last, current, and one around current
+                            if (
+                                i === 0 ||
+                                i === totalPages - 1 ||
+                                (i >= currentPage - 2 && i <= currentPage)
+                            ) {
+                                return (
+                                    <button
+                                        key={i}
+                                        onClick={() => setCurrentPage(i + 1)}
+                                        className={`px-3.5 py-1.5 rounded-md transition-all duration-200 ${currentPage === i + 1 ? 'bg-primary text-white shadow-md' : 'text-gray-600 hover:bg-gray-50'}`}
+                                    >
+                                        {i + 1}
+                                    </button>
+                                );
+                            }
+                            if (i === 1 || i === totalPages - 2) {
+                                return <span key={i} className="px-2 text-gray-300">...</span>;
+                            }
+                            return null;
+                        })}
+
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                            disabled={currentPage === totalPages}
+                            className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+                        >›</button>
+                        <button
+                            onClick={() => setCurrentPage(totalPages)}
+                            disabled={currentPage === totalPages}
+                            className="px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+                        >»</button>
                     </div>
                 </div>
             </div>

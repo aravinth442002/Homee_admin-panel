@@ -8,10 +8,13 @@ import MapView from './pages/MapView';
 import Vendor from './pages/Vendor';
 import VendorRequest from './pages/VendorRequest';
 import VendorList from './pages/VendorList';
-import VendorDetail from './pages/VendorDetail';
+import VendorView from './pages/VendorView';
+import AddVendor from './pages/AddVendor';
 import Delivery from './pages/Delivery';
 import Shipping from './pages/Shipping';
 import Admin from './pages/Admin';
+import AddFood from './pages/AddFood';
+import AddOrder from './pages/AddOrder';
 import ProfileSettings from './pages/ProfileSettings';
 import './App.css';
 
@@ -32,9 +35,12 @@ function App() {
           <Route path="user/:id" element={<UserDetail />} />
           <Route path="map" element={<MapView />} />
           <Route path="vendor" element={<Navigate to="request" replace />} />
-          <Route path="vendor/:id" element={<VendorDetail />} />
+          <Route path="vendor/:id" element={<VendorView />} />
+          <Route path="vendor/:id/food/add" element={<AddFood />} />
+          <Route path="vendor/:id/order/add" element={<AddOrder />} />
           <Route path="vendor/request" element={<VendorRequest />} />
           <Route path="vendor/list" element={<VendorList />} />
+          <Route path="vendor/add" element={<AddVendor />} />
           <Route path="delivery" element={<Delivery />} />
           <Route path="shipping" element={<Shipping />} />
           <Route path="admin" element={<Admin />} />
