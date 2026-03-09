@@ -20,7 +20,12 @@ const navItems = [
             { name: 'Vendor List', path: '/dashboard/vendor/list', icon: BiBookBookmark }
         ]
     },
-    { name: 'Delivery', path: '/dashboard/delivery', icon: TbTruckDelivery, hasSub: true },
+    {
+        name: 'Delivery', path: '/dashboard/delivery', icon: TbTruckDelivery, hasSub: true, subItems: [
+            { name: 'Delivery boy request', path: '/dashboard/delivery/request', icon: LuCookingPot },
+            { name: 'Delivery boy list', path: '/dashboard/delivery/list', icon: BiBookBookmark }
+        ]
+    },
     { name: 'Shipping & Kilo...', path: '/dashboard/shipping', icon: FiPrinter, hasSub: true },
     { name: 'Admin', path: '/dashboard/admin', icon: FiCheckSquare, hasSub: true },
     { name: 'Profile Settings', path: '/dashboard/settings', icon: FiSettings },
@@ -28,7 +33,7 @@ const navItems = [
 
 const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
-    const [expandedMenus, setExpandedMenus] = useState({});
+    const [expandedMenu, setExpandedMenu] = useState(null);
     const location = useLocation();
 
     return (
@@ -63,16 +68,14 @@ const Sidebar = () => {
                         ? location.pathname === item.path
                         : location.pathname.startsWith(item.path);
 
-                    const isExpanded = expandedMenus[item.name] !== undefined
-                        ? expandedMenus[item.name]
-                        : isActive;
+                    const isExpanded = expandedMenu === item.name;
 
                     const handleMenuClick = (e) => {
                         if (item.subItems) {
                             if (item.path === '#') {
                                 e.preventDefault();
                             }
-                            setExpandedMenus(prev => ({ ...prev, [item.name]: !isExpanded }));
+                            setExpandedMenu(isExpanded ? null : item.name);
                         }
                     };
 
@@ -99,7 +102,7 @@ const Sidebar = () => {
                             {!isCollapsed && item.subItems && isExpanded && (
                                 <div className="flex flex-col mt-1 space-y-2 bg-[#1A251D] rounded-lg py-2 px-1">
                                     {item.subItems.map((sub, i) => {
-                                        const isVendorDetail = location.pathname.startsWith('/dashboard/vendor/') && !['/dashboard/vendor/request', '/dashboard/vendor/list', '/dashboard/vendor/add'].includes(location.pathname);
+                                        const isVendorDetail = location.pathname.startsWith('/dashboard/vendor/') && !location.pathname.startsWith('/dashboard/vendor/request') && !['/dashboard/vendor/list', '/dashboard/vendor/add'].includes(location.pathname);
                                         const isSubActive = location.pathname === sub.path || location.pathname.startsWith(sub.path + '/') || (sub.name === 'Vendor List' && (location.pathname.includes('/vendor/add') || isVendorDetail));
                                         return (
                                             <Link

@@ -288,7 +288,7 @@ const VendorRequest = () => {
                                                     <button className="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center space-x-3 text-gray-700 font-medium transition-colors text-[13px]">
                                                         <FiEdit2 size={14} /> <span>Edit</span>
                                                     </button>
-                                                    <button onClick={() => navigate('/dashboard/vendor/' + vendor.id)} className="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center space-x-3 text-gray-700 font-medium transition-colors text-[13px]">
+                                                    <button onClick={() => navigate('/dashboard/vendor/request/' + vendor.id)} className="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center space-x-3 text-gray-700 font-medium transition-colors text-[13px]">
                                                         <FiEye size={14} /> <span>View</span>
                                                     </button>
                                                     <button className="w-full text-left px-4 py-2 hover:bg-red-50 hover:text-red-500 flex items-center space-x-3 text-gray-700 font-medium transition-colors group text-[13px]">
