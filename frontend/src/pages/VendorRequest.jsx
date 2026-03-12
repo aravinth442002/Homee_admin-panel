@@ -270,7 +270,7 @@ const VendorRequest = () => {
                                         <td className="py-4 px-3 opacity-80">{vendor.email}</td>
                                         <td className="py-4 px-3 opacity-80">{vendor.mobile}</td>
                                         <td className="py-4 px-3 text-center">
-                                            <button className="bg-secondary hover:bg-primary-hover text-white px-5 py-2 rounded-md text-xs font-bold transition-all hover:-translate-y-1 shadow-sm active:scale-95 min-w-[90px]">
+                                            <button className="bg-quaternary hover:bg-secondary text-white px-5 py-2 rounded-md text-xs font-bold transition-all hover:-translate-y-1 shadow-sm active:scale-95 min-w-[90px]">
                                                 Accept
                                             </button>
                                         </td>

@@ -197,13 +197,6 @@ const VendorDetail = () => {
                                     </div>
                                 </div>
                             </div>
-
-                            {/* Accept Button */}
-                            <div className="pt-6 pb-4 flex justify-center">
-                                <button className="w-[70vw] bg-quaternary hover:-translate-y-1 hover:shadow-lg hover:shadow-dark/30 hover:opacity-90 text-white py-2.5 rounded-lg text-[15px] font-semibold transition-all duration-300 shadow-sm tracking-wide active:scale-[0.98]">
-                                    Accept
-                                </button>
-                            </div>
                         </div>
                     )}
 

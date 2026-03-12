@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import {
     FiGrid, FiMap, FiCoffee, FiPrinter, FiCheckSquare,
-    FiSettings, FiChevronsLeft, FiChevronsRight, FiChevronDown
+    FiSettings, FiChevronsLeft, FiChevronsRight, FiChevronDown,
+    FiUserPlus, FiUsers
 } from 'react-icons/fi';
 import { HiMiniUserGroup } from 'react-icons/hi2';
 import { PiCubeFocusBold } from 'react-icons/pi';
@@ -22,8 +23,8 @@ const navItems = [
     },
     {
         name: 'Delivery', path: '/dashboard/delivery', icon: TbTruckDelivery, hasSub: true, subItems: [
-            { name: 'Delivery boy request', path: '/dashboard/delivery/request', icon: LuCookingPot },
-            { name: 'Delivery boy list', path: '/dashboard/delivery/list', icon: BiBookBookmark }
+            { name: 'Delivery boy request', path: '/dashboard/delivery/request', icon: FiUserPlus },
+            { name: 'Delivery boy list', path: '/dashboard/delivery/list', icon: FiUsers }
         ]
     },
     { name: 'Shipping & Kilo...', path: '/dashboard/shipping', icon: FiPrinter, hasSub: true },
