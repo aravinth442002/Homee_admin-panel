@@ -6,8 +6,6 @@ import UserList from './pages/UserList';
 import UserDetail from './pages/UserDetail';
 import MapView from './pages/MapView';
 import Vendor from './pages/Vendor';
-import VendorRequest from './pages/VendorRequest';
-import VendorList from './pages/VendorList';
 import VendorDetail from './pages/VendorDetail';
 import VendorView from './pages/VendorView';
 import AddVendor from './pages/AddVendor';
@@ -37,13 +35,11 @@ function App() {
           <Route path="user" element={<UserList />} />
           <Route path="user/:id" element={<UserDetail />} />
           <Route path="map" element={<MapView />} />
-          <Route path="vendor" element={<Navigate to="request" replace />} />
+          <Route path="vendor" element={<Vendor />} />
           <Route path="vendor/:id" element={<VendorView />} />
           <Route path="vendor/:id/food/add" element={<AddFood />} />
           <Route path="vendor/:id/order/add" element={<AddOrder />} />
-          <Route path="vendor/request" element={<VendorRequest />} />
           <Route path="vendor/request/:id" element={<VendorDetail />} />
-          <Route path="vendor/list" element={<VendorList />} />
           <Route path="vendor/add" element={<AddVendor />} />
           <Route path="delivery" element={<Navigate to="request" replace />} />
           <Route path="delivery/request" element={<DeliveryBoyRequest />} />

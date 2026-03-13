@@ -15,12 +15,7 @@ const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: FiGrid },
     { name: 'User', path: '/dashboard/user', icon: HiMiniUserGroup },
     { name: 'Map View', path: '/dashboard/map', icon: FiMap },
-    {
-        name: 'Vendor', path: '/dashboard/vendor', icon: PiCubeFocusBold, hasSub: true, subItems: [
-            { name: 'Vendor Request', path: '/dashboard/vendor/request', icon: LuCookingPot },
-            { name: 'Vendor List', path: '/dashboard/vendor/list', icon: BiBookBookmark }
-        ]
-    },
+    { name: 'Vendor', path: '/dashboard/vendor', icon: PiCubeFocusBold },
     {
         name: 'Delivery', path: '/dashboard/delivery', icon: TbTruckDelivery, hasSub: true, subItems: [
             { name: 'Delivery boy request', path: '/dashboard/delivery/request', icon: FiUserPlus },
